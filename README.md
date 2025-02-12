@@ -36,9 +36,9 @@ OPENAI_API_KEY=your_openai_api_key
 EXA_API_KEY=your_exa_api_key
 ```
 
-3. Set up Gmail API credentials:
+3. Set up Gmail API credentials for newsletter email:
 - Go to Google Cloud Console and create credentials for Gmail API
-- Download the credentials and save as `credentials.json` in the `src` folder. For this follow the guide `https://developers.google.com/gmail/api/quickstart/python#authorize_credentials_for_a_desktop_application`
+- Download the credentials and save as `credentials.json` in the `src` folder. For this follow the [guide] ("https://developers.google.com/gmail/api/quickstart/python#authorize_credentials_for_a_desktop_application")
 - This will be used for sending newsletters from your specified email account
 
 4. Build and run with Docker:
@@ -47,7 +47,7 @@ docker-compose up
 ```
 
 5. Access the application:
-Open your browser and navigate to:
+Open your browser and navigate to the below URL to access the streamlit app:
 ```
 http://localhost:8501
 ```
@@ -67,7 +67,10 @@ You will be prompted to enter:
 
 ### Streamlit Interface
 
-Access the web interface directly at `http://localhost:8501`
+Access the web interface directly at `http://localhost:8501` by 
+```bash
+streamlit run src/streamlit.py
+```
 
 ## 🔧 Configuration
 
