@@ -1,0 +1,26 @@
+# Python cache and compiled files
+src/__pycache__/
+src/automated_newsletter_multi_agent_crew/__pycache__/
+
+# Virtual environment and dependencies
+src/automated_newsletter_multi_agent_crew/.env
+venv/
+
+# Logs and temporary files
+logs/
+*.log
+
+# Credentials and sensitive files
+src/credentials.json
+src/token.json
+
+# Output files
+src/output_newsletter.md
+
+# IDE and editor settings
+.vscode/
+.idea/
+
+# Docker artifacts
+docker-compose.yml
+Dockerfile

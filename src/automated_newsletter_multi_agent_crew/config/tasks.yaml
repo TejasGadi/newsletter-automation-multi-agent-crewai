@@ -1,0 +1,184 @@
+research_task:
+  description: >
+    Conduct a thorough research about the latest news on {topic}. 
+    Be sure to look for sources that are reliable and publish recent news.
+    Do not include articles that are not news material or that are not 
+    directly related to {topic}.
+    
+    With this research, compile a list of the most relevant news 
+    stories that you found. 
+
+    Follow these rules:
+    - Only include articles that are especially relevant to {topic}. 
+    Do not include any news that are not directly related to {topic}. 
+    - Do not include sources that are not a news article. 
+    If the content of the page includes a list of articles or 
+    looks like the front page of a website, do not include it in the list!
+    - Summarize the news in a few sentences. Make the summary as long 
+    as necessary to include all the relevant information, but not too 
+    long for a newsletter.
+    - Include the URL of the article where you found the news.
+    - Include a minimum of 7 news articles and a maximum of 10 news 
+    articles in the list.
+    - When using the Search Tool, your search query should be concise 
+    (for example, "latest news on {topic}").
+
+    IMPORTANT INSTRUCTIONS ABOUT USING TOOLS: When using tools, 
+    DO NOT ESCAPE the underscore character "_", EVER. If you need 
+    to use a tool and pass in a parameter called 'search_query', 
+    you should write 'search_query', not 'search\_query'. 
+    THIS IS VERY IMPORTANT, else the tool will not work.
+
+    Tool Call Instructions
+    1. Search Tool
+    Use the tool Search Tool with the following inputs:
+    search_query: The query string to search for on the web.
+    The tool retrieves search results from the last 30 days.
+    Important: Do not include backslash (\) escape characters in the input.
+    2. Find Similar Tool
+    Use the tool Find Similar Tool with the following inputs:
+    url: The URL of the article for which similar articles need to be found.
+    The tool fetches related articles from the last 4 days.
+    Important: Ensure that the URL is provided as a plain string without backslash (\) escape characters.
+    3. Get Contents Tool
+    Use the tool Get Contents Tool with the following inputs:
+    ids: A list of article URLs whose contents need to be fetched.
+    The response will include extracted text with a maximum of 300 characters.
+    Important: Format the input as a list of strings without backslashes, e.g.:
+      "ids": ["https://www.cnbc.com/my-news", "https://www.bscs.com/second"]
+
+
+  expected_output: >
+    A markdown document with the most relevant news stories. Each 
+    news story should contain the following:
+    - Title of the news
+    - Summary of the news
+    - URL of the article where the news was found
+
+    Here is an example of the format of a news article that you 
+    could include in the document:
+    
+    <EXAMPLE>
+    ### Story 1: **Daily briefing: AI now beats humans at basic reading and maths**
+    - **Summary:** AI systems can now nearly match and sometimes exceed 
+      human performance in basic tasks. The report discusses the need for new 
+      benchmarks to assess AI capabilities and highlights the ethical 
+      considerations for AI models.
+    - **URL:** [Nature Article](https://www.nature.com/articles/d41586-024-01125-1)
+    </EXAMPLE>
+
+edit_task:
+  description: >
+    Given the list of news articles that will be used in the newsletter, 
+    do the following things:
+    
+    - Rewrite the title of each news article to make it more engaging and 
+    interesting for the readers of the newsletter.
+    - Add a paragraph to each news article that explains why this news is 
+    important and how it can impact the readers of the newsletter.
+    - Reorder the bullet points in a way that the most relevant news and 
+    topics are at the top of the list based on the importance of the news 
+    and topics.
+    - Verify that the news articles are directly related to {topic} and that 
+    they are not off-topic. If they are off-topic, remove them from the list.
+    - Verify that the URLs are correct and that they lead to the correct news 
+    article. They should lead to a news article and not to a list of articles 
+    or the front page of a website. If the URL is incorrect, ask the researcher 
+    to provide the correct URL.
+    - Do not search for additional news articles or change the content of the 
+    news articles. Only edit the existing news articles.
+    
+    Tool Call Instructions
+    1. Search Tool
+    Use the tool Search Tool with the following inputs:
+    search_query: The query string to search for on the web.
+    The tool retrieves search results from the last 30 days.
+    Important: Do not include backslash (\) escape characters in the input.
+    2. Find Similar Tool
+    Use the tool Find Similar Tool with the following inputs:
+    url: The URL of the article for which similar articles need to be found.
+    The tool fetches related articles from the last 4 days.
+    Important: Ensure that the URL is provided as a plain string without backslash (\) escape characters.
+    3. Get Contents Tool
+    Use the tool Get Contents Tool with the following inputs:
+    ids: A list of article URLs whose contents need to be fetched.
+    The response will include extracted text with a maximum of 300 characters.
+    Important: Format the input as a list of strings without backslashes, e.g.:
+      "ids": ["https://www.cnbc.com/my-news", "https://www.bscs.com/second"]
+
+
+  expected_output: >
+    A markdown document with all the news to be included in the newsletter 
+    of the week. The document should have a title related to the curated 
+    stories of the week and a list of news articles.
+    
+    Each one should contain:
+    - **Title:**
+    - **Summary:**
+    - **Source:** [URL of the article]
+
+    Here is an example of a document that you are expected to produce:
+    <EXAMPLE>
+    # Title: **  write title of the article
+    
+    ## AI Surpasses Human Capabilities in Basic Reading and Maths
+    - **Summary:** Recent advancements in AI technology have enabled 
+      systems to match and sometimes exceed human performance in fundamental 
+      tasks such as reading and arithmetic. This shift necessitates the 
+      creation of new benchmarks to appropriately evaluate AI capabilities.
+ 
+    - **Source:** [Nature Article](https://www.nature.com/articles/d41586-024-01125-1
+    </EXAMPLE>
+  context: [research_task]
+
+newsletter_task:
+  description: >
+    Compile a markdown newsletter using the provided news articles. 
+    
+    Follow these rules:
+    - Do not truncate the information or change the order of the elements. 
+    - Do not modify the content of the news articles.
+    - Do not add any additional information to the newsletter.
+    - Add ALL the news stories provided to the newsletter.
+
+  expected_output: >
+    A markdown document formatted as a newsletter.
+
+    # Monthly News Roundup
+    
+    ---
+    
+    ## Top Stories
+    
+    ### First Title/Article
+    - **Summary:** summary of first article from context
+    - **Source URL:** url of that article
+    
+    [... next news articles append here ...]
+  
+  context: [edit_task]
+
+
+send_email_task:
+  description: >
+    Send the final newsletter in Markdown format to the specified recipient ({email_id}).
+    
+    Steps:
+    - Send the email to {email_id}.
+    - Ensure the newsletter content is in Markdown (.md) format.
+    - The subject of the email should be: "Your Weekly Newsletter on {topic}".
+    - The email body should include a brief message:
+      "Hello, here is your latest newsletter on {topic}. Please find the attached newsletter below."
+    - Attach the full newsletter content in the email body (not as an external file).
+    - If any error occurs while sending, log the error and retry.
+
+    Tool Call Instructions:
+    - Use the tool 'SendGmailMessage' with the following inputs:
+      - `topic`: {topic}
+      - `email_content`: Full newsletter content in organized format that includes headings/bullets,newline when necessary etc
+      - `email_id`: {email_id}
+    
+  expected_output: >
+    A confirmation message indicating that the email has been successfully sent.
+
+  context: [newsletter_task]
