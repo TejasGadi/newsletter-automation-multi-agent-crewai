@@ -55,6 +55,7 @@ http://localhost:8501
 ## 💻 Usage
 
 ### Command Line Interface
+If you want to use without streamlit
 
 Run the newsletter generation system:
 ```bash
@@ -64,13 +65,6 @@ python main.py
 You will be prompted to enter:
 - Newsletter topic
 - Email ID for distribution
-
-### Streamlit Interface
-
-Access the web interface directly at `http://localhost:8501` by 
-```bash
-streamlit run src/streamlit.py
-```
 
 ## 🔧 Configuration
 
